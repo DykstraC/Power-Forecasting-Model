@@ -1,0 +1,3 @@
+Average =    3.500    
+Average of positive points =    3.500    
+Average of negative points =    0.000    
