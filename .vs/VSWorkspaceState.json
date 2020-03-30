@@ -1,8 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\datasets"
+    "\\AverageCalc",
+    "\\datasets",
+    "\\GUI",
+    "\\GUI\\PONG"
   ],
-  "SelectedNode": "\\driver.py",
+  "SelectedNode": "\\main.py",
   "PreviewInSolutionExplorer": false
 }

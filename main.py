@@ -4,6 +4,8 @@ import numpy as np
 import matplotlib
 import sys
 import os
+from PySide2.QtWidgets import QApplication, QDialog, QLineEdit, QPushButton, QVBoxLayout
+#import nested_dict as nd
 
 
 class PowerError(Exception):
@@ -17,9 +19,28 @@ class PowerError(Exception):
         return repr(self.msg)
 
 
+#class Form(QDialog):
+
+#    def __init__(self, parent=None):
+#        super(Form, self).__init__(parent)
+#        # Create widgets
+#        self.edit = QLineEdit("Write my name here")
+#        self.button = QPushButton("Show Greetings")
+#        # Create layout and add widgets
+#        layout = QVBoxLayout()
+#        layout.addWidget(self.edit)
+#        layout.addWidget(self.button)
+#        # Set dialog layout
+#        self.setLayout(layout)
+#        # Add button signal to greetings slot
+#        self.button.clicked.connect(self.greetings)
+
+#    # Greets the user
+#    def greetings(self):
+#        print ("Hello %s" % self.edit.text())
+
+
 def get_period(stime, etime):
-    global start_period
-    global end_period
     # Convert start_time arg to time of day slot
     start_period = int(str(stime)[:2]) * 2 + 1
     if 0 < int(str(stime)[-2:]):
@@ -53,7 +74,6 @@ def get_period(stime, etime):
 
 
 def get_dateDiff(sdate, edate, start_period, end_period):
-    global periods_between
     temp_days_between = edate - sdate
     print(temp_days_between.days)
     days_between = temp_days_between.days
@@ -82,31 +102,61 @@ def get_datetime(start_year, start_month, start_day, end_year, end_month, end_da
 
     print(end_date-start_date)
     
-    get_period(start_time, end_time)
-    speriod = start_period
-    eperiod = end_period
+    speriod, eperiod = get_period(start_time, end_time)
+    #speriod = start_period
+    #eperiod = end_period
     print(speriod, eperiod)
-    get_dateDiff(start_date, end_date, speriod, eperiod)
-    forecast_period = periods_between
+    forecast_period = get_dateDiff(start_date, end_date, speriod, eperiod)
+    # = periods_between
     print(forecast_period)
 
 
-def price_Vector():
-    with open(TradingPriceData.csv) as p:
-        i = 0
-        daily_price_demand = {}
-        for i in range(periods_between - 1):
-            if i == i + 5:
-                pass
+#def price_Vector():
+#    i = 0
+#    daily_price_demand = {} #nd.nested_dict()
+#    with open(TradingPriceData.csv) as p:
+#        # gather headers except first key header
+#        headers = p.next().split(',')[1:]
+#        # iterate lines
+#        for line in p:
+#            # gather the colums
+#            cols = line.strip().split(',')
+#            # check to make sure this key should be mapped.
+#            if cols[0] not in keys:
+#                continue
+#            # add key to dict
+#            daily_price_demand[cols[0]] = dict(
+#                # inner keys are the header names, values are columns
+#                (headers[idx], v) for idx, v in enumerate(cols[1:]))
+#        #for i in range(periods_between - 1):
+#            #if i == p[i + 5]:
+#            #daily_price_demand[p[i]][p[i+1]] = 
 
+# create empty dictionary
+# d = {}
 
-
-
-
-
-
-
+#-----------------------------------------read from file b.csv-----------------
+#with open(b_file) as f:
+#    # gather headers except first key header
+#    headers = f.next().split(',')[1:]
+#    # iterate lines
+#    for line in f:
+#        # gather the colums
+#        cols = line.strip().split(',')
+#        # check to make sure this key should be mapped.
+#        if cols[0] not in keys:
+#            continue
+#        # add key to dict
+#        d[cols[0]] = dict(
+#            # inner keys are the header names, values are columns
+#            (headers[idx], v) for idx, v in enumerate(cols[1:]))
 
 if __name__ == "__main__":
     get_datetime(2018, 4, 15, 2019, 5, 13, 1430, 1000)
-    #sys.exit(main())
+    # Create the Qt Application
+    app = QApplication(sys.argv)
+    # Create and show the form
+#    form = Form()
+#    form.show()
+    # Run the main Qt loop
+    sys.exit(app.exec_())
